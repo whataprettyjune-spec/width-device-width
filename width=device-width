@@ -1,0 +1,291 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>PinkInsight: منصة الرعاية الذكية وتوجيه صحة الثدي</title>
+    <!-- مكتبة لإنشاء رموز QR كود للإحالة الطبية -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/qrcodejs/1.0.0/qrcode.min.js"></script>
+    <style>
+        :root {
+            --primary-pink: #d81b60;
+            --light-pink: #fce4ec;
+            --dark-text: #212121;
+            --white: #ffffff;
+            --gray-bg: #fafafa;
+        }
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background-color: var(--gray-bg);
+            color: var(--dark-text);
+            margin: 0;
+            padding: 0;
+        }
+        header {
+            background: linear-gradient(135deg, var(--primary-pink), #ad1457);
+            color: var(--white);
+            text-align: center;
+            padding: 35px 20px;
+        }
+        header h1 {
+            margin: 0;
+            font-size: 26px;
+        }
+        header p {
+            margin-top: 8px;
+            font-size: 14px;
+            opacity: 0.95;
+        }
+        .container {
+            max-width: 850px;
+            margin: 25px auto;
+            background: var(--white);
+            padding: 30px;
+            border-radius: 16px;
+            box-shadow: 0 4px 20px rgba(0,0,0,0.06);
+        }
+        h2 {
+            color: var(--primary-pink);
+            font-size: 20px;
+            border-bottom: 2px solid var(--light-pink);
+            padding-bottom: 8px;
+            margin-top: 30px;
+        }
+        .section-box {
+            margin-bottom: 20px;
+            background: #fff0f5;
+            padding: 18px 20px;
+            border-radius: 12px;
+            border: 1px solid #f8bbd0;
+        }
+        label {
+            display: block;
+            margin-bottom: 8px;
+            font-weight: 600;
+        }
+        select, input {
+            width: 100%;
+            padding: 11px;
+            border: 1px solid #ccc;
+            border-radius: 8px;
+            font-size: 14px;
+            box-sizing: border-box;
+        }
+        /* خريطة الجسم التفاعلية */
+        .grid-map {
+            display: grid;
+            grid-template-columns: repeat(2, 1fr);
+            gap: 12px;
+            margin-top: 10px;
+        }
+        .map-quad {
+            background: var(--white);
+            border: 2px solid #f8bbd0;
+            padding: 15px;
+            text-align: center;
+            border-radius: 10px;
+            cursor: pointer;
+            transition: all 0.3s;
+            font-weight: bold;
+            color: #ad1457;
+        }
+        .map-quad:hover, .map-quad.selected {
+            background: var(--primary-pink);
+            color: var(--white);
+            border-color: #ad1457;
+        }
+        /* شجرة الحياة التفاعلية */
+        .tree-container {
+            text-align: center;
+            padding: 20px;
+            background: #e8f5e9;
+            border-radius: 12px;
+            margin-bottom: 25px;
+            border: 1px solid #c8e6c9;
+            transition: all 0.5s;
+        }
+        .tree-icon {
+            font-size: 45px;
+            margin-bottom: 5px;
+        }
+        button {
+            background-color: var(--primary-pink);
+            color: var(--white);
+            border: none;
+            padding: 14px 25px;
+            font-size: 16px;
+            font-weight: bold;
+            border-radius: 8px;
+            cursor: pointer;
+            width: 100%;
+            transition: background 0.3s;
+            margin-top: 15px;
+        }
+        button:hover {
+            background-color: #ad1457;
+        }
+        /* قسم النتائج والتذكرة الرقمية */
+        #resultContainer {
+            margin-top: 25px;
+            padding: 20px;
+            border-radius: 12px;
+            display: none;
+        }
+        .ticket-card {
+            background: #ffffff;
+            border: 2px dashed var(--primary-pink);
+            padding: 20px;
+            border-radius: 12px;
+            margin-top: 15px;
+            text-align: right;
+        }
+        #qrcode {
+            margin: 15px auto;
+            display: flex;
+            justify-content: center;
+        }
+        /* قسم المساعد الذكي سَكينة */
+        .faq-box {
+            background: #f3e5f5;
+            padding: 15px 20px;
+            border-radius: 12px;
+            margin-top: 30px;
+            border: 1px solid #ce93d8;
+        }
+        .faq-box h3 {
+            color: #7b1fa2;
+            margin-top: 0;
+            font-size: 18px;
+        }
+    </style>
+</head>
+<body>
+
+    <header>
+        <h1>PinkInsight: المنصة الذكية المتكاملة لصحة الثدي</h1>
+        <p>فحص ذكي، تحديد دقيق للمواقع، وتوجيه جغرافي فوري للعيادات المعتمدة</p>
+    </header>
+
+    <div class="container">
+        
+        <!-- عنصر شجرة الحياة التفاعلية -->
+        <div class="tree-container" id="treeBox">
+            <div class="tree-icon" id="treeEmoji">🌳</div>
+            <p id="treeStatus" style="margin: 0; color: #2e7d32; font-weight: bold; font-size: 15px;">حالة المؤشر الوقائي: مستقر، صحي، وينمو بوعيك</p>
+        </div>
+
+        <h2>1. تحديد مكان الملاحظة أو التغير بدقة</h2>
+        <p>انقري على ربع الثدي الذي تلاحظين فيه أي تغير:</p>
+        <div class="grid-map">
+            <div class="map-quad" onclick="selectQuad(this, 'الربع العلوي الخارجي')">الربع العلوي الخارجي</div>
+            <div class="map-quad" onclick="selectQuad(this, 'الربع العلوي الداخلي')">الربع العلوي الداخلي</div>
+            <div class="map-quad" onclick="selectQuad(this, 'الربع السفلي الخارجي')">الربع السفلي الخارجي</div>
+            <div class="map-quad" onclick="selectQuad(this, 'الربع السفلي الداخلي')">الربع السفلي الداخلي</div>
+        </div>
+        <input type="hidden" id="selectedArea" value="لم يتم التحديد">
+
+        <div class="section-box" style="margin-top: 20px;">
+            <label>2. طبيعة الملاحظة أو العرض:</label>
+            <select id="symptomType">
+                <option value="none">لا توجد ملاحظات تستدعي القلق (فحص روتيني)</option>
+                <option value="lump">وجود كتلة صلبة أو تورم جديد</option>
+                <option value="skin">تغير في مظهر أو ملمس الجلد (مثل انكماش)</option>
+                <option value="discharge">إفرازات غير طبيعية من الحلمة</option>
+            </select>
+        </div>
+
+        <div class="section-box">
+            <label>3. اخترِ مدينتك لتوجيهك لأقرب مركز فحص:</label>
+            <select id="userCity">
+                <option value="الرياض">الرياض - مركز الفحص المبكر ومستشفى الملك خالد الجامعي</option>
+                <option value="جدة">جدة - عيادات الثدي ومستشفى الملك فهد</option>
+                <option value="مكة المكرمة">مكة المكرمة - مستشفى الملك عبد العزيز التخصصي</option>
+                <option value="الطائف">الطائف - مستشفى الملك عبدالعزيز التخصصي وعيادات الفحص</option>
+                <option value="المنطقة الشرقية">المنطقة الشرقية - مستشفى الملك فهد الجامعي بالخبر</option>
+            </select>
+        </div>
+
+        <button onclick="runAdvancedTriage()">إجراء التحليل الذكي وتوليد بطاقة الإحالة الفورية</button>
+
+        <!-- صندوق النتائج والإحالة -->
+        <div id="resultContainer"></div>
+    </div>
+
+    <!-- قسم المساعد الذكي (سَكينة) -->
+    <div class="container faq-box">
+        <h3>💬 رفيقتك "سَكينة" للرد على الأسئلة الشائعة</h3>
+        <p><b>س: متى يجب أن أبدأ بالفحص الذاتي الشهري؟</b><br>ج: يفضل إجراؤه شهرياً بعد انتهاء الدورة الشهرية بأسبوع، أو في يوم محدد وثابت من كل شهر لمن انقطعت عنهن الدورة.</p>
+        <p><b>س: هل كل تغير أو كتلة تعني الإصابة؟</b><br>ج: قطعاً لا! أكثر من 80% من التغيرات حميدة وطبيعية، ولكن هدفنا هو الاطمئنان المبكر واستشارة الطبيب المتخصص.</p>
+    </div>
+
+    <script>
+        let chosenArea = "لم يتم التحديد";
+
+        function selectQuad(element, areaName) {
+            document.querySelectorAll('.map-quad').forEach(el => el.classList.remove('selected'));
+            element.classList.add('selected');
+            chosenArea = areaName;
+            document.getElementById('selectedArea').value = areaName;
+        }
+
+        function runAdvancedTriage() {
+            const symptom = document.getElementById('symptomType').value;
+            const city = document.getElementById('userCity').value;
+            const resultContainer = document.getElementById('resultContainer');
+            const treeEmoji = document.getElementById('treeEmoji');
+            const treeStatus = document.getElementById('treeStatus');
+            const treeBox = document.getElementById('treeBox');
+            
+            resultContainer.style.display = 'block';
+            
+            if(symptom !== 'none' || chosenArea !== "لم يتم التحديد") {
+                // حالة تتطلب التوجيه الطبي
+                treeEmoji.innerHTML = '🌱';
+                treeBox.style.backgroundColor = '#ffebee';
+                treeBox.style.borderColor = '#ef9a9a';
+                treeStatus.style.color = '#c62828';
+                treeStatus.innerHTML = 'مؤشر الاهتمام الصحي: يتطلب استشارة طبية عاجلة ومراجعة العيادة المعتمدة';
+
+                resultContainer.style.backgroundColor = '#ffebee';
+                resultContainer.style.border = '1px solid #ef9a9a';
+                resultContainer.innerHTML = `
+                    <h3 style="color: #c62828; margin-top:0;">⚠️ تنبيه طبي استباقي</h3>
+                    <p>بناءً على اختيارك في <b>(${chosenArea})</b> ونوع الملاحظة، نوصي بالحجز الفوري في أقرب مركز فحص مبكر بمدينة <b>${city}</b>.</p>
+                    <div class="ticket-card">
+                        <h4 style="color: var(--primary-pink); margin-top:0;">🎫 بطاقة الإحالة الرقمية الآمنة (PinkInsight Pass)</h4>
+                        <p><b>المنطقة المحددة:</b> ${chosenArea}</p>
+                        <p><b>المدينة المختارة:</b> ${city}</p>
+                        <p><b>رقم الإحالة التعريفي:</b> PI-${Math.floor(100000 + Math.random() * 900000)}</p>
+                        <p><b>التوجيه الميداني:</b> توجهي إلى أقرب مركز معتمد في مدينتك مع هذه البطاقة لتسهيل إجراءات الفحص السريري والماموجرام.</p>
+                        <div id="qrcode"></div>
+                    </div>
+                `;
+
+                // توليد باركود QR كود حقيقي
+                document.getElementById("qrcode").innerHTML = "";
+                new QRCode(document.getElementById("qrcode"), {
+                    text: `PinkInsight-Ref: ${chosenArea} - City: ${city} - Status: Urgent FollowUp`,
+                    width: 120,
+                    height: 120
+                });
+
+            } else {
+                // حالة اطمئنانية وسليمة
+                treeEmoji.innerHTML = '🌳';
+                treeBox.style.backgroundColor = '#e8f5e9';
+                treeBox.style.borderColor = '#c8e6c9';
+                treeStatus.style.color = '#2e7d32';
+                treeStatus.innerHTML = 'حالة المؤشر الوقائي: مستقر، صحي، ومتألق بوعيك المستمر';
+
+                resultContainer.style.backgroundColor = '#e8f5e9';
+                resultContainer.style.border = '1px solid #c8e6c9';
+                resultContainer.innerHTML = `
+                    <h3 style="color: #2e7d32; margin-top:0;">✨ النتائج اطمئنانية ووقائية</h3>
+                    <p>لا توجد أعراض تستدعي القلق. نوصيكِ بالاستمرار في الفحص الذاتي الشهري بانتظام في مدينة <b>${city}</b> للحفاظ على صحتك الوقائية.</p>
+                `;
+            }
+        }
+    </script>
+
+</body>
+</html>
